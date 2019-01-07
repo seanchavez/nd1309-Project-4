@@ -5,6 +5,7 @@
 const level = require('level');
 const chainDB = './chaindata';
 
+
 class LevelSandbox {
 
     constructor() {

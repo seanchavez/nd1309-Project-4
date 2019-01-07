@@ -18,11 +18,14 @@ class Blockchain {
   // will not create the genesis block
   generateGenesisBlock() {
     // Add your code here
+    
   }
 
   // Get block height, it is auxiliar method that return the height of the blockchain
   getBlockHeight() {
     // Add your code here
+    const self = this
+    ret
   }
 
   // Add new block
@@ -40,7 +43,7 @@ class Blockchain {
     // Add your code here
   }
 
-  // Validate Blockchain
+  // Validate Blockc        hain
   validateChain() {
     // Add your code here
   }
