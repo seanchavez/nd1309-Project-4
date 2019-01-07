@@ -27,7 +27,17 @@ class Blockchain {
 
   // Add new block
   addBlock(block) {
-    block.height = this.getBlockHeight();
+    block.height = this.getBlockHeight() + 1;
+    block.timeStamp = new Date()
+      .getTime()
+      .toString()
+      .slice(0, -3);
+
+    if (block.height > 1) {
+      block.previousHash = this.getBlock(block.height - 1).hash;
+    }
+    block.hash = SHA256(JSON.stringify(block)).toString();
+    this.bd.addLevelDBData(block.height, block);
   }
 
   // Get Block By Height
