@@ -21,13 +21,13 @@ class Blockchain {
   }
 
   // Get block height, it is auxiliar method that return the height of the blockchain
-  getBlockHeight() {
+  async getBlockHeight() {
     return this.bd.getBlocksCount();
   }
 
   // Add new block
-  addBlock(block) {
-    block.height = this.getBlockHeight() + 1;
+  async addBlock(block) {
+    block.height = (await this.getBlockHeight()) + 1;
     block.timeStamp = new Date()
       .getTime()
       .toString()
@@ -37,21 +37,21 @@ class Blockchain {
       block.previousHash = this.getBlock(block.height - 1).hash;
     }
     block.hash = SHA256(JSON.stringify(block)).toString();
-    
-    this.bd.addLevelDBData(block.height, block);
+
+    await this.bd.addLevelDBData(block.height, block);
   }
 
   // Get Block By Height
-   getBlock(height) {
-   return this.bd.getLevelDBData(height)
+  async getBlock(height) {
+    return this.bd.getLevelDBData(height);
   }
 
   // Validate if Block is being tampered by Block Height
-   async validateBlock(height) {
+  async validateBlock(height) {
     try {
-      const block = await this.getBlock(height)
-      const blockHash = block.hash
-      block.hash = ''
+      const block = await this.getBlock(height);
+      const blockHash = block.hash;
+      block.hash = '';
       const validBlockHash = SHA256(JSON.stringify(block)).toString();
       if (blockHash === validBlockHash) {
         return true;
