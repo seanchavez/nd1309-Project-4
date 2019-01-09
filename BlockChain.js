@@ -37,20 +37,33 @@ class Blockchain {
       block.previousHash = this.getBlock(block.height - 1).hash;
     }
     block.hash = SHA256(JSON.stringify(block)).toString();
+    
     this.bd.addLevelDBData(block.height, block);
   }
 
   // Get Block By Height
-  getBlock(height) {
-    // Add your code here
+   getBlock(height) {
+   return this.bd.getLevelDBData(height)
   }
 
   // Validate if Block is being tampered by Block Height
-  validateBlock(height) {
-    // Add your code here
+   async validateBlock(height) {
+    try {
+      const block = await this.getBlock(height)
+      const blockHash = block.hash
+      block.hash = ''
+      const validBlockHash = SHA256(JSON.stringify(block)).toString();
+      if (blockHash === validBlockHash) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  // Validate Blockc        hain
+  // Validate Blockchain
   validateChain() {
     // Add your code here
   }
