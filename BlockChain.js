@@ -64,8 +64,18 @@ class Blockchain {
   }
 
   // Validate Blockchain
-  validateChain() {
-    // Add your code here
+  async validateChain() {
+    const errorLog = [];
+    for (let i = 0; i < this.validateChain.length - 1; i++) {
+      if (!this.validateBlock(i)) {
+        errorLog.push(i);
+      }
+      const block = await this.getBlock(i);
+      const nextBlock = await this.getBlock(i + 1);
+      if (nextBlock && block.hash !== nextBlock.previousHash) {
+        errorLog.push(i);
+      }
+    }
   }
 
   // Utility Method to Tamper a Block for Test Validation
