@@ -1,11 +1,29 @@
 /* ===== Executable Test ==================================
 |  Use this file to test your project.
 |  =========================================================*/
+// const level = require('level');
+// const chainDB = './chaindata';
+
+// db = level(chainDB);
 
 const Blockchain = require('./BlockChain.js');
 const Block = require('./Block.js');
 
 const myBlockChain = new Blockchain();
+
+// db.createReadStream()
+//   .on('data', function(data) {
+//     console.log(data.key, '=', data.value);
+//   })
+//   .on('error', function(err) {
+//     console.log('Oh my!', err);
+//   })
+//   .on('close', function() {
+//     console.log('Stream closed');
+//   })
+//   .on('end', function() {
+//     console.log('Stream ended');
+//   });
 
 // setTimeout(function() {
 //   console.log('Waiting...');

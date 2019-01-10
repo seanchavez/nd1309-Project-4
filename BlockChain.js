@@ -24,33 +24,40 @@ class Blockchain {
 
   // Get block height, it is auxiliar method that return the height of the blockchain
   async getBlockHeight() {
-    return this.bd.getBlocksCount() - 1;
+    return this.bd.getBlocksCount();
   }
 
   // Add new block
   async addBlock(block) {
-    await this.getBlockHeight().then(height => {
-      if (height) {
-        block.height = height + 1;
-      }
-    });
+    // await this.getBlockHeight().then(height => {
+    //   if (height) {
+    //     console.log('Height: ', height);
+    //     block.height = parseInt(height) + 1;
+    //   }
+    // });
+
+    const height = parseInt(await this.getBlockHeight());
+    block.height = height + 1;
 
     block.timeStamp = new Date()
       .getTime()
       .toString()
       .slice(0, -3);
 
-    if (block.height > 0) {
-      block.previousHash = this.getBlock(block.height - 1).hash;
-    }
-    block.hash = SHA256(JSON.stringify(block)).toString();
+    console.log('Height: ', block.height);
+
+    // if (block.height > 0) {
+    //   const prevBlock = await this.getBlock(height);
+    //   block.previousHash = prevBlock.hash;
+    // }
+    // block.hash = SHA256(JSON.stringify(block)).toString();
 
     return await this.bd.addLevelDBData(block.height, JSON.stringify(block));
   }
 
   // Get Block By Height
   async getBlock(height) {
-    return this.bd.getLevelDBData(parseInt(height));
+    return this.bd.getLevelDBData(height);
   }
 
   // Validate if Block is being tampered by Block Height
