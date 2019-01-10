@@ -37,7 +37,7 @@ class Blockchain {
     // });
 
     const height = parseInt(await this.getBlockHeight());
-    block.height = height + 1;
+    block.height = height;
 
     block.timeStamp = new Date()
       .getTime()
