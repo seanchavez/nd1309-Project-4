@@ -9,6 +9,7 @@ const Block = require('./Block.js');
 class Blockchain {
   constructor() {
     this.bd = new LevelSandbox.LevelSandbox();
+    this.addBlock(new Block('Genesis Block!'));
     //this.generateGenesisBlock();
     //this.addBlock(new Block('First block in the chain - Genesis block'));
   }
@@ -17,12 +18,8 @@ class Blockchain {
   // You have to options, because the method will always execute when you create your blockchain
   // you will need to set this up statically or instead you can verify if the height !== 0 then you
   // will not create the genesis block
-  // async generateGenesisBlock() {
-  //   const block = new Block('Genesis Block');
-  //   block.hash = SHA256(JSON.stringify(block)).toString();
+  //  generateGenesisBlock() {
 
-  //   return await this.bd.addLevelDBData(0, block);
-  //this.addBlock(new Block('Genesis Block'));
   //}
 
   // Get block height, it is auxiliar method that return the height of the blockchain
@@ -33,9 +30,11 @@ class Blockchain {
   // Add new block
   async addBlock(block) {
     await this.getBlockHeight().then(height => {
-      block.height = height + 1;
+      if (height) {
+        block.height = height + 1;
+      }
     });
-    //block.height = 0;
+
     block.timeStamp = new Date()
       .getTime()
       .toString()
