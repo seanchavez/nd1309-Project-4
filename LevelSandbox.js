@@ -32,7 +32,7 @@ class LevelSandbox {
         if (err) {
           reject(err);
         } else {
-          resolve({ key: value });
+          resolve(value);
         }
       });
     });

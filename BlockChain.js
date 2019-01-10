@@ -16,8 +16,12 @@ class Blockchain {
   // You have to options, because the method will always execute when you create your blockchain
   // you will need to set this up statically or instead you can verify if the height !== 0 then you
   // will not create the genesis block
-  generateGenesisBlock() {
-    // Add your code here
+  async generateGenesisBlock() {
+    const block = new Block('Genesis Block');
+    block.hash = SHA256(JSON.stringify(block)).toString();
+
+    return await this.bd.addLevelDBData(0, block);
+    //this.addBlock(new Block('Genesis Block'));
   }
 
   // Get block height, it is auxiliar method that return the height of the blockchain
@@ -27,18 +31,18 @@ class Blockchain {
 
   // Add new block
   async addBlock(block) {
-    block.height = (await this.getBlockHeight()) + 1;
+    block.height = await this.getBlockHeight();
     block.timeStamp = new Date()
       .getTime()
       .toString()
       .slice(0, -3);
 
-    if (block.height > 1) {
+    if (block.height > 0) {
       block.previousHash = this.getBlock(block.height - 1).hash;
     }
     block.hash = SHA256(JSON.stringify(block)).toString();
 
-    await this.bd.addLevelDBData(block.height, block);
+    return await this.bd.addLevelDBData(block.height, block);
   }
 
   // Get Block By Height
@@ -96,4 +100,4 @@ class Blockchain {
   }
 }
 
-module.exports.Blockchain = Blockchain;
+module.exports = Blockchain;
