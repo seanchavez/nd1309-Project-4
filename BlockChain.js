@@ -46,11 +46,13 @@ class Blockchain {
 
     console.log('Height: ', block.height);
 
-    // if (block.height > 0) {
-    //   const prevBlock = await this.getBlock(height);
-    //   block.previousHash = prevBlock.hash;
-    // }
-    // block.hash = SHA256(JSON.stringify(block)).toString();
+    if (block.height > 0) {
+      console.log('Fuck You');
+      const prevBlock = JSON.parse(await this.getBlock(height - 1));
+      //console.log('prevBlock: ', prevBlock.hash);
+      block.previousHash = prevBlock.hash;
+    }
+    block.hash = SHA256(JSON.stringify(block)).toString();
 
     return await this.bd.addLevelDBData(block.height, JSON.stringify(block));
   }
