@@ -47,7 +47,7 @@ class Blockchain {
     console.log('Height: ', block.height);
 
     if (height > 0) {
-      const prevBlock = JSON.parse(await this.getBlock(height - 1));
+      const prevBlock = await this.getBlock(height - 1);
       //console.log('prevBlock: ', prevBlock.hash);
       block.previousHash = prevBlock.hash;
     }
@@ -58,13 +58,13 @@ class Blockchain {
 
   // Get Block By Height
   async getBlock(height) {
-    return JSON.parse(this.bd.getLevelDBData(height.toString));
+    return JSON.parse(await this.bd.getLevelDBData(height));
   }
 
   // Validate if Block is being tampered by Block Height
   async validateBlock(height) {
     try {
-      const block = JSON.parse(await this.getBlock(height));
+      const block = await this.getBlock(height);
       const blockHash = block.hash;
       block.hash = '';
       const validBlockHash = SHA256(JSON.stringify(block)).toString();
@@ -91,6 +91,7 @@ class Blockchain {
         errorLog.push(i);
       }
     }
+    return errorLog;
   }
 
   // Utility Method to Tamper a Block for Test Validation

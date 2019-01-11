@@ -14,7 +14,7 @@ class LevelSandbox {
   getLevelDBData(key) {
     let self = this;
     return new Promise(function(resolve, reject) {
-      self.db.get(key, (err, value) => {
+      self.db.get(key.toString(), (err, value) => {
         if (err) {
           reject(err);
         } else {
