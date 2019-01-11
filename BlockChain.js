@@ -53,12 +53,12 @@ class Blockchain {
     }
     block.hash = SHA256(JSON.stringify(block)).toString();
 
-    return await this.bd.addLevelDBData(block.height, JSON.stringify(block));
+    return await this.bd.addLevelDBData(height.toString(), JSON.stringify(block));
   }
 
   // Get Block By Height
   async getBlock(height) {
-    return JSON.parse(await this.bd.getLevelDBData(height));
+    return JSON.parse(await this.bd.getLevelDBData(height.toString()));
   }
 
   // Validate if Block is being tampered by Block Height
