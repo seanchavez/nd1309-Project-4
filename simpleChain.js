@@ -33,17 +33,17 @@ const myBlockChain = new Blockchain();
  ** Function for Create Tests Blocks   ****
  ******************************************/
 
-// (function theLoop(i) {
-//   setTimeout(function() {
-//     let blockTest = new Block('Test Block - ' + (i + 1));
-//     // Be careful this only will work if your method 'addBlock' in the Blockchain.js file return a Promise
-//     myBlockChain.addBlock(blockTest).then(result => {
-//       console.log(result);
-//       i++;
-//       if (i < 10) theLoop(i);
-//     });
-//   }, 1000);
-// })(0);
+(function theLoop(i) {
+  setTimeout(function() {
+    let blockTest = new Block('Test Block - ' + (i + 1));
+    // Be careful this only will work if your method 'addBlock' in the Blockchain.js file return a Promise
+    myBlockChain.addBlock(blockTest).then(result => {
+      console.log(result);
+      i++;
+      if (i < 10) theLoop(i);
+    });
+  }, 1000);
+})(0);
 
 //console.log(myBlockChain);
 
@@ -81,7 +81,7 @@ const myBlockChain = new Blockchain();
  ***********************************************/
 
 // Be careful this only will work if `getBlock` method in Blockchain.js file return a Promise
-myBlockChain;
+//myBlockChain
 // .getBlock(0)
 // .then(block => {
 //   //console.log(JSON.stringify(block));
@@ -163,18 +163,18 @@ myBlockChain;
  ***********************************************/
 
 // Be careful this only will work if `validateChain` method in Blockchain.js file return a Promise
-myBlockChain
-  .validateChain()
-  .then(errorLog => {
-    if (errorLog.length > 0) {
-      console.log('The chain is not valid:');
-      errorLog.forEach(error => {
-        console.log(error);
-      });
-    } else {
-      console.log('No errors found, The chain is Valid!');
-    }
-  })
-  .catch(error => {
-    console.log(error);
-  });
+// myBlockChain
+//   .validateChain()
+//   .then(errorLog => {
+//     if (errorLog.length > 0) {
+//       console.log('The chain is not valid:');
+//       errorLog.forEach(error => {
+//         console.log(error);
+//       });
+//     } else {
+//       console.log('No errors found, The chain is Valid!');
+//     }
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
