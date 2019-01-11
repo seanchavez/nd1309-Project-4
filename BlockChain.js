@@ -25,7 +25,8 @@ class Blockchain {
   // Get block height, it is auxiliar method that return the height of the blockchain
   async getBlockHeight() {
     try {
-      return this.bd.getBlocksCount();
+      const blockCount = parseInt(await this.bd.getBlocksCount());
+      return blockCount - 1;
     } catch (error) {
       console.error(error);
     }
@@ -34,7 +35,7 @@ class Blockchain {
   // Add new block
   async addBlock(block) {
     try {
-      const height = parseInt(await this.getBlockHeight());
+      const height = await this.getBlockHeight();
       block.height = height;
 
       block.timeStamp = new Date()

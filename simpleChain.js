@@ -11,20 +11,6 @@ const Block = require('./Block.js');
 
 const myBlockChain = new Blockchain();
 
-// db.createReadStream()
-//   .on('data', function(data) {
-//     console.log(data.key, '=', data.value);
-//   })
-//   .on('error', function(err) {
-//     console.log('Oh my!', err);
-//   })
-//   .on('close', function() {
-//     console.log('Stream closed');
-//   })
-//   .on('end', function() {
-//     console.log('Stream ended');
-//   });
-
 // setTimeout(function() {
 //   console.log('Waiting...');
 // }, 10000);
@@ -45,28 +31,11 @@ const myBlockChain = new Blockchain();
   }, 1000);
 })(0);
 
-//console.log(myBlockChain);
-
-// myBlockChain.getBlock(0).then(block => {
-//   parsedBlock = JSON.parse(block);
-//   console.log(parsedBlock.data);
-// });
-
-// .addBlock(new Block('First block in the chain - Genesis block'))
-//   .then(response => {
-//     console.log('RES: ', response);
-//   });
-// myBlockChain.getBlock(0).then(block => {
-//   console.log(block.data);
-// });
-//console.log('Genesis: ', myBlockChain.getBlock(0));
-//console.log('WTF', myBlockChain);
-
 /***********************************************
  ** Function to get the Height of the Chain ****
  ***********************************************/
 
-//Be careful this only will work if `getBlockHeight` method in Blockchain.js file return a Promise
+// //Be careful this only will work if `getBlockHeight` method in Blockchain.js file return a Promise
 // myBlockChain
 //   .getBlockHeight()
 //   .then(height => {
@@ -76,26 +45,26 @@ const myBlockChain = new Blockchain();
 //     console.log(err);
 //   });
 
-/***********************************************
- ******** Function to Get a Block  *************
- ***********************************************/
+// /***********************************************
+//  ******** Function to Get a Block  *************
+//  ***********************************************/
 
-// Be careful this only will work if `getBlock` method in Blockchain.js file return a Promise
-//myBlockChain
-// .getBlock(0)
-// .then(block => {
-//   //console.log(JSON.stringify(block));
-//   console.log(block);
-// })
-// .catch(err => {
-//   console.log(err);
-// });
+// // Be careful this only will work if `getBlock` method in Blockchain.js file return a Promise
+// myBlockChain
+//   .getBlock(0)
+//   .then(block => {
+//     //console.log(JSON.stringify(block));
+//     console.log(block);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
 
-/***********************************************
- ***************** Validate Block  *************
- ***********************************************/
+// /***********************************************
+//  ***************** Validate Block  *************
+//  ***********************************************/
 
-// Be careful this only will work if `validateBlock` method in Blockchain.js file return a Promise
+// // Be careful this only will work if `validateBlock` method in Blockchain.js file return a Promise
 // myBlockChain
 //   .validateBlock(0)
 //   .then(valid => {
@@ -105,7 +74,7 @@ const myBlockChain = new Blockchain();
 //     console.log(error);
 //   });
 
-/** Tampering a Block this is only for the purpose of testing the validation methods */
+// /** Tampering a Block this is only for the purpose of testing the validation methods */
 
 // myBlockChain
 //   .getBlock(5)
@@ -158,11 +127,11 @@ const myBlockChain = new Blockchain();
 //     console.log(err);
 //   });
 
-/***********************************************
- ***************** Validate Chain  *************
- ***********************************************/
+// /***********************************************
+//  ***************** Validate Chain  *************
+//  ***********************************************/
 
-// Be careful this only will work if `validateChain` method in Blockchain.js file return a Promise
+// // Be careful this only will work if `validateChain` method in Blockchain.js file return a Promise
 // myBlockChain
 //   .validateChain()
 //   .then(errorLog => {
