@@ -28,7 +28,7 @@ class LevelSandbox {
   addLevelDBData(key, value) {
     let self = this;
     return new Promise((resolve, reject) => {
-      self.db.put(key, value, function(err) {
+      self.db.put(key.toString(), value, function(err) {
         if (err) {
           reject(err);
         } else {

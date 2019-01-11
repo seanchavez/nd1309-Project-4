@@ -46,8 +46,7 @@ class Blockchain {
 
     console.log('Height: ', block.height);
 
-    if (block.height > 0) {
-      console.log('Fuck You');
+    if (height > 0) {
       const prevBlock = JSON.parse(await this.getBlock(height - 1));
       //console.log('prevBlock: ', prevBlock.hash);
       block.previousHash = prevBlock.hash;
@@ -59,13 +58,13 @@ class Blockchain {
 
   // Get Block By Height
   async getBlock(height) {
-    return this.bd.getLevelDBData(height);
+    return JSON.parse(this.bd.getLevelDBData(height.toString));
   }
 
   // Validate if Block is being tampered by Block Height
   async validateBlock(height) {
     try {
-      const block = await this.getBlock(height);
+      const block = JSON.parse(await this.getBlock(height));
       const blockHash = block.hash;
       block.hash = '';
       const validBlockHash = SHA256(JSON.stringify(block)).toString();
