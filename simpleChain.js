@@ -35,7 +35,7 @@ const myBlockChain = new Blockchain();
  ** Function to get the Height of the Chain ****
  ***********************************************/
 
-// //Be careful this only will work if `getBlockHeight` method in Blockchain.js file return a Promise
+//Be careful this only will work if `getBlockHeight` method in Blockchain.js file return a Promise
 // myBlockChain
 //   .getBlockHeight()
 //   .then(height => {

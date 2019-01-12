@@ -10,22 +10,12 @@ class Blockchain {
   constructor() {
     this.bd = new LevelSandbox();
     this.addBlock(new Block('Genesis Block!'));
-    //this.generateGenesisBlock();
-    //this.addBlock(new Block('First block in the chain - Genesis block'));
   }
-
-  // Helper method to create a Genesis Block (always with height= 0)
-  // You have to options, because the method will always execute when you create your blockchain
-  // you will need to set this up statically or instead you can verify if the height !== 0 then you
-  // will not create the genesis block
-  //  generateGenesisBlock() {
-
-  //}
 
   // Get block height, it is auxiliar method that return the height of the blockchain
   async getBlockHeight() {
     try {
-      const blockCount = parseInt(await this.bd.getBlocksCount());
+      const blockCount = await this.bd.getBlocksCount();
       return blockCount - 1;
     } catch (error) {
       console.error(error);
@@ -35,21 +25,24 @@ class Blockchain {
   // Add new block
   async addBlock(block) {
     try {
-      const height = await this.getBlockHeight();
-      block.height = height;
+      const chainHeight = await this.getBlockHeight();
+      block.height = chainHeight + 1;
 
       block.timeStamp = new Date()
         .getTime()
         .toString()
         .slice(0, -3);
 
-      if (height > 0) {
-        const prevBlock = await this.getBlock(height - 1);
+      if (block.height > 0) {
+        const prevBlock = await this.getBlock(chainHeight);
         block.previousHash = prevBlock.hash;
       }
       block.hash = SHA256(JSON.stringify(block)).toString();
 
-      return this.bd.addLevelDBData(height.toString(), JSON.stringify(block));
+      return this.bd.addLevelDBData(
+        block.height.toString(),
+        JSON.stringify(block),
+      );
     } catch (error) {
       console.error(error);
     }
