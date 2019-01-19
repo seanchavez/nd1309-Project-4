@@ -28,7 +28,7 @@ app.post('/block', async (req, res) => {
   try {
     const blockBody = req.body.body;
     if (!blockBody) {
-      res.status(400).json({ error: 'Must add data to block' });
+      res.status(400).json({ error: 'Block body can not be empty' });
     }
     const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
     if (block) {

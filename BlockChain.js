@@ -35,7 +35,7 @@ class Blockchain {
 
       if (block.height > 0) {
         const prevBlock = await this.getBlock(chainHeight);
-        block.previousHash = prevBlock.hash;
+        block.previousBlockHash = prevBlock.hash;
       }
       block.hash = SHA256(JSON.stringify(block)).toString();
 
@@ -84,7 +84,7 @@ class Blockchain {
         }
         const block = await this.getBlock(i);
         const nextBlock = await this.getBlock(i + 1);
-        if (nextBlock && block.hash !== nextBlock.previousHash) {
+        if (nextBlock && block.hash !== nextBlock.previousBlockHash) {
           errorLog.push(i);
         }
       }
