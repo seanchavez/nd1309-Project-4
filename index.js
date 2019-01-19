@@ -14,7 +14,6 @@ app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 app.get('/block/:height', async (req, res) => {
   try {
     const block = await bc.getBlock(req.params.height);
-    console.log('Block: ', block);
     if (block) {
       res.status(200).json(block);
     } else {
@@ -26,13 +25,12 @@ app.get('/block/:height', async (req, res) => {
 });
 
 app.post('/block', async (req, res) => {
-  console.log('Body: ', req.body);
   try {
-    if (!req.body.body) {
-      res.status(400).json({ error: 'Block body can not be empty' });
+    const blockBody = req.body.body;
+    if (!blockBody) {
+      res.status(400).json({ error: 'Must add data to block' });
     }
-    const block = await bc.addBlock(new Block(req.body.body));
-    console.log('Block: ', block);
+    const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
     if (block) {
       res.status(201).json(block);
     } else {
