@@ -10,10 +10,15 @@ app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 app.get('/block/:height', (req, res) => {
   bc.getBlock(req.params.height)
     .then(block => {
-      res.status(200).json(block);
+      console.log('Block: ', block);
+      if (block) {
+        res.status(200).json(block);
+      } else {
+        res.status(404).json({ error: 'Block not found' });
+      }
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).send({ error: err });
     });
 });
 
