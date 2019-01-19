@@ -1,7 +1,11 @@
 const Blockchain = require('./BlockChain.js');
+const Block = require('./Block.js');
 const express = require('express');
+const bp = require('body-parser');
 const app = express();
 const port = 8000;
+
+app.use(bp.json());
 
 const bc = new Blockchain();
 
@@ -22,8 +26,12 @@ app.get('/block/:height', async (req, res) => {
 });
 
 app.post('/block', async (req, res) => {
+  console.log('Body: ', req.body);
   try {
-    const block = await bc.addBlock(req.body);
+    if (!req.body.body) {
+      res.status(400).json({ error: 'Block body can not be empty' });
+    }
+    const block = await bc.addBlock(new Block(req.body.body));
     console.log('Block: ', block);
     if (block) {
       res.status(201).json(block);
@@ -31,7 +39,7 @@ app.post('/block', async (req, res) => {
       res.status(400).json({ error: 'Block could not be added' });
     }
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: 'Something went wrong' });
   }
 });
 
