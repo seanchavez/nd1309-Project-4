@@ -54,6 +54,7 @@ class Blockchain {
       return JSON.parse(await this.bd.getLevelDBData(height.toString()));
     } catch (error) {
       console.error(error);
+      return error;
     }
   }
 
