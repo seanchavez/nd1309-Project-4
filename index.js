@@ -1,5 +1,5 @@
-const Blockchain = require('./BlockChain.js');
-const Block = require('./Block.js');
+const Blockchain = require('./BlockChain');
+const Block = require('./Block');
 const express = require('express');
 const bp = require('body-parser');
 const app = express();
