@@ -23,16 +23,17 @@ Use Postman , curl, or similar tool to make http requests.
 
 ## GET
 
-URL: http://localhost:8000/block/[block height]
+URL: http://localhost:8000/block/[block_height]
 
 A request to this endpoint returns the requested block object in the response.
-example:
+
+#### example:
 
 ```
 curl http://localhost:8000/block/0
 ```
 
-response:
+#### response:
 
 ```
 {
@@ -54,13 +55,13 @@ A request to this endpoint must include data for the block body in JSON format:
 
 The request will create a new block with the submitted data on the "body" property and returns the newly added block object in the response.
 
-example:
+#### example:
 
 ```
 curl -d '{"body":"data"}' -H "Content-Type: application/json" -X POST http://localhost:8000/block
 ```
 
-response:
+#### response:
 
 ```
 {
