@@ -1,10 +1,10 @@
 # Project 2
 
-This project utilizes the Express framework to expose GET and POST endpoints that interact with a private blockchain.
+This project utilizes the Express framework for Node.js to expose GET and POST endpoints that interact with a private blockchain.
 
 ## Getting Started
 
-Clone or download the project onto your machine. From your command line, CD into the
+Clone or download the project onto your machine. From the command line, CD into the
 project's root directory and run:
 
 ```
@@ -27,13 +27,13 @@ URL: http://localhost:8000/block/[block_height]
 
 A request to this endpoint returns the requested block object in the response.
 
-#### example:
+#### example request:
 
 ```
 curl http://localhost:8000/block/0
 ```
 
-#### response:
+#### example response:
 
 ```
 {
@@ -55,13 +55,13 @@ A request to this endpoint must include data for the block body in JSON format:
 
 The request will create a new block with the submitted data on the "body" property and returns the newly added block object in the response.
 
-#### example:
+#### example request:
 
 ```
 curl -d '{"body":"data"}' -H "Content-Type: application/json" -X POST http://localhost:8000/block
 ```
 
-#### response:
+#### example response:
 
 ```
 {
