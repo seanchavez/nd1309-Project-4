@@ -19,7 +19,7 @@ node index.js
 
 ### Usage:
 
-Use Postman , curl, or similar tool to make http requests.
+Use Postman, curl, or similar tool to make HTTP requests.
 
 ## GET
 
