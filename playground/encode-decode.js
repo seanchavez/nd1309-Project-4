@@ -1,7 +1,12 @@
 fs = require('fs');
 
-imgReadBuffer = fs.readFileSync('favicon.png');
+const imgReadBuffer = fs.readFileSync('favicon.png');
 
-imgHexEncode = new Buffer(imgReadBuffer).toString('hex');
+const imgHexEncode = Buffer.from(imgReadBuffer).toString('hex');
 
+console.log(imgReadBuffer);
 console.log(imgHexEncode);
+
+const imgHexDecode = Buffer.from(imgHexEncode, 'hex');
+
+fs.writeFileSync('decodedHex-favicon.png', imgHexDecode);
