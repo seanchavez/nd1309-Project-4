@@ -11,6 +11,8 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
+app.post('/requestValidation', (req, res) => {});
+
 app.get('/block/:height', async (req, res) => {
   try {
     const block = await bc.getBlock(req.params.height);
