@@ -15,25 +15,27 @@ app.post('/requestValidation', (req, res) => {
   try {
     const address = req.body.address;
     if (bc.mempool[address]) {
-      bc.mempool[address].validationWindow =
+      bc.mempool[address].validationWindow -=
         (Date.now() - bc.mempool[address].requestTimeStamp) / 1000;
+      console.log('IDK: ', bc.mempool[address]);
       res.status(200).json(bc.mempool[address]);
-    }
-    const timestamp = Date.now();
-    const response = {
-      walletAddress: address,
-      requestTimeStamp: timestamp,
-      message: `${address}:${timestamp}:starRegistry`,
-      validationWindow: 300,
-    };
-    bc.mempool[address] = response;
-    res.status(200).json(response);
+    } else {
+      const timestamp = Date.now();
+      const response = {
+        walletAddress: address,
+        requestTimeStamp: timestamp,
+        message: `${address}:${timestamp}:starRegistry`,
+        validationWindow: 300,
+      };
 
-    const validationRequestTimer = setTimeout(() => {
-      delete bc.mempool[address];
-    }, 1000 * 60 * 5);
-    bc.mempool[address].timeoutID = validationRequestTimer();
-    console.log('ResponseWhat: ', bc.mempool[address].timeoutID);
+      response.timeoutID = setTimeout(() => {
+        delete bc.mempool[address];
+      }, 1000 * 60 * 5)((bc.mempool[address] = response));
+      bc.mempool[address];
+      res.status(200).json(response);
+
+      console.log('ResponseWhat: ', bc.mempool[address]);
+    }
   } catch (error) {
     res.status(500).json(error);
   }
