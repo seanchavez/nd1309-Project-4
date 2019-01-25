@@ -14,11 +14,15 @@ app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 app.post('/requestValidation', (req, res) => {
   try {
     const address = req.body.address;
-    const timestamp = Date.now();
+    if (bc.mempool[address]) {
+      bc.mempool[address].validationWindow =
+        (Date.now() - bc.mempool[address].requestTimeStamp) / 1000;
+      res.status(200).json(bc.mempool[address]);
+    }
     const response = {
       walletAddress: address,
-      requestTimeStamp: timestamp,
-      message: `${address}:${timestamp}:starRegistry`,
+      requestTimeStamp: Date.now(),
+      message: `${address}:${this.requestTimeStamp}:starRegistry`,
       validationWindow: 300,
     };
     res.status(200).json(response);
@@ -27,6 +31,7 @@ app.post('/requestValidation', (req, res) => {
       delete bc.mempool[address];
     }, 1000 * 60 * 5);
     bc.mempool[address] = response;
+    console.log('Response: ', response);
   } catch (error) {
     res.status(500).json(error);
   }
