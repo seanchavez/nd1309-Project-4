@@ -19,19 +19,21 @@ app.post('/requestValidation', (req, res) => {
         (Date.now() - bc.mempool[address].requestTimeStamp) / 1000;
       res.status(200).json(bc.mempool[address]);
     }
+    const timestamp = Date.now();
     const response = {
       walletAddress: address,
-      requestTimeStamp: Date.now(),
-      message: `${address}:${this.requestTimeStamp}:starRegistry`,
+      requestTimeStamp: timestamp,
+      message: `${address}:${timestamp}:starRegistry`,
       validationWindow: 300,
     };
+    bc.mempool[address] = response;
     res.status(200).json(response);
 
-    response.timeoutID = setTimeout(() => {
+    const validationRequestTimer = setTimeout(() => {
       delete bc.mempool[address];
     }, 1000 * 60 * 5);
-    bc.mempool[address] = response;
-    console.log('Response: ', response);
+    bc.mempool[address].timeoutID = validationRequestTimer();
+    console.log('ResponseWhat: ', bc.mempool[address].timeoutID);
   } catch (error) {
     res.status(500).json(error);
   }
