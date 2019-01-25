@@ -10,6 +10,7 @@ class Blockchain {
   constructor() {
     this.bd = new LevelSandbox();
     this.addBlock(new Block('Genesis Block!'));
+    this.mempool = {};
   }
 
   // Get block height, it is auxiliar method that return the height of the blockchain

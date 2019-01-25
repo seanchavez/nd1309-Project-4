@@ -11,7 +11,21 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
-app.post('/requestValidation', (req, res) => {});
+app.post('/requestValidation', (req, res) => {
+  try {
+    const address = req.body.address;
+    const timestamp = Date.now();
+    const response = {
+      walletAddress: address,
+      requestTimeStamp: timestamp,
+      message: `${address}:${timestamp}:starRegistry`,
+      validationWindow: 300,
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 app.get('/block/:height', async (req, res) => {
   try {
