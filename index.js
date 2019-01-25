@@ -22,6 +22,11 @@ app.post('/requestValidation', (req, res) => {
       validationWindow: 300,
     };
     res.status(200).json(response);
+
+    response.timeoutID = setTimeout(() => {
+      delete bc.mempool[address];
+    }, 1000 * 60 * 5);
+    bc.mempool[address] = response;
   } catch (error) {
     res.status(500).json(error);
   }
