@@ -14,9 +14,10 @@ app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 app.post('/requestValidation', (req, res) => {
   try {
     const address = req.body.address;
+
     if (bc.mempool[address]) {
       bc.mempool[address].response.validationWindow -=
-        (Date.now() - bc.mempool[address].requestTimeStamp) / 1000;
+        (Date.now() - bc.mempool[address].response.requestTimeStamp) / 1000;
       console.log('IDK: ', bc.mempool[address]);
       res.status(200).json(bc.mempool[address].response);
     } else {
