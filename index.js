@@ -16,8 +16,11 @@ app.post('/requestValidation', (req, res) => {
     const address = req.body.address;
 
     if (bc.mempool[address]) {
-      bc.mempool[address].response.validationWindow -=
-        (Date.now() - bc.mempool[address].response.requestTimeStamp) / 1000;
+      bc.mempool[address].response.validationWindow = Math.round(
+        (bc.mempool[address].response.requestTimeStamp -
+          (Date.now() - 5 * 60 * 1000)) /
+          1000,
+      );
       console.log('IDK: ', bc.mempool[address]);
       res.status(200).json(bc.mempool[address].response);
     } else {
@@ -34,6 +37,7 @@ app.post('/requestValidation', (req, res) => {
       bc.mempool[address] = { response };
       bc.mempool[address].timeoutID = setTimeout(() => {
         delete bc.mempool[address];
+        console.log('5 min Timeout!');
       }, 1000 * 60 * 5);
 
       console.log('ResponseWhat: ', bc.mempool[address]);
@@ -42,6 +46,70 @@ app.post('/requestValidation', (req, res) => {
     res.status(500).json(error);
   }
 });
+
+// app.post('/requestValidation', (req, res) => {
+//   try {
+//     const address = req.body.address;
+
+//     if (bc.mempool[address]) {
+//       bc.mempool[address].response.validationWindow -=
+//         (Date.now() - bc.mempool[address].response.requestTimeStamp) / 1000;
+//       console.log('IDK: ', bc.mempool[address]);
+//       res.status(200).json(bc.mempool[address].response);
+//     } else {
+//       const timestamp = Date.now();
+//       const response = {
+//         walletAddress: address,
+//         requestTimeStamp: timestamp,
+//         message: `${address}:${timestamp}:starRegistry`,
+//         validationWindow: 300,
+//       };
+
+//       res.status(200).json(response);
+
+//       bc.mempool[address] = { response };
+//       bc.mempool[address].timeoutID = setTimeout(() => {
+//         delete bc.mempool[address].response;
+//       }, 1000 * 60 * 5);
+
+//       console.log('ResponseWhat: ', bc.mempool[address]);
+//     }
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
+// app.post('/requestValidation', (req, res) => {
+//   try {
+//     const address = req.body.address;
+//     //const validationRequest = bc.mempool[address];
+//     if (bc.mempool[address]) {
+//       bc.mempool[address].response.validationWindow -=
+//         (Date.now() - bc.mempool[address].response.requestTimeStamp) / 1000;
+//       console.log('IDK: ', bc.mempool[address]);
+//       res.status(200).json(bc.mempool[address].response);
+//     } else {
+//       const timestamp = Date.now();
+//       const response = {
+//         walletAddress: address,
+//         requestTimeStamp: timestamp,
+//         message: `${address}:${timestamp}:starRegistry`,
+//         validationWindow: 300,
+//       };
+
+//       res.status(200).json(response);
+
+//       bc.mempool[address] = { response };
+//       bc.mempool[address].timeoutID = setTimeout(() => {
+//         delete bc.mempool[address];
+//       }, 1000 * 60 * 5);
+
+//       console.log('ResponseWhat: ', bc.mempool[address]);
+//     }
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
 
 app.get('/block/:height', async (req, res) => {
   try {
