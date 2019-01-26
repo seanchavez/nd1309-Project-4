@@ -12,7 +12,18 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
-app.get('/stars/:address', (req, res) => {});
+app.get('/stars/:address', async (req, res) => {
+  try {
+    const stars = await bc.getBlocksWithSameAddress(req.params.address);
+    if (stars) {
+      res.status(200).json(stars);
+    } else {
+      res.status(404).json({ error: 'No stars found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
 
 app.post('/message-signature/validate', (req, res) => {
   try {

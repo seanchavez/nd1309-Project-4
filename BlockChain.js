@@ -15,6 +15,14 @@ class Blockchain {
     this.mempool = {};
   }
 
+  async getBlocksWithSameAddress(address) {
+    try {
+      return this.bd.getBlocksByAddress(address);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // Get block height, it is auxiliar method that return the height of the blockchain
   async getBlockHeight() {
     try {
