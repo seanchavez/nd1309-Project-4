@@ -60,7 +60,7 @@ app.post('/message-signature/validate', (req, res) => {
         .json({ error: 'You need to submit a validation request' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'What in the actual fuck' });
+    res.status(500).json({ error: 'Something went wrong' });
   }
 });
 
@@ -96,7 +96,7 @@ app.post('/requestValidation', (req, res) => {
       console.log('ResponseWhat: ', bc.mempool[address]);
     }
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: 'Something went wrong' });
   }
 });
 
@@ -109,21 +109,25 @@ app.get('/block/:height', async (req, res) => {
       res.status(404).json({ error: 'Block not found' });
     }
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: 'Something went wrong' });
   }
 });
 
 app.post('/block', async (req, res) => {
   try {
-    const blockBody = req.body.body;
-    if (!blockBody) {
-      res.status(400).json({ error: 'Block body can not be empty' });
-    }
-    const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
-    if (block) {
-      res.status(201).json(block);
+    const blockBody = req.body;
+    if (!bc.mempool[blockBody.address].registerStar) {
+      res.status(400).json({ error: 'You must first validate this request' });
+    } else if (!blockBody.star) {
+      res.status(400).json({ error: 'Add star data' });
     } else {
-      res.status(400).json({ error: 'Block could not be added' });
+      blockBody.star.story = Buffer(blockBody.star.story).toString('hex');
+      const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
+      if (block) {
+        res.status(201).json(block);
+      } else {
+        res.status(400).json({ error: 'Block could not be added' });
+      }
     }
   } catch (error) {
     res.status(500).json({ error: 'Something went wrong' });

@@ -29,10 +29,7 @@ class Blockchain {
       const chainHeight = await this.getBlockHeight();
       block.height = chainHeight + 1;
 
-      block.timeStamp = new Date()
-        .getTime()
-        .toString()
-        .slice(0, -3);
+      block.time = Date.now();
 
       if (block.height > 0) {
         const prevBlock = await this.getBlock(chainHeight);
@@ -93,23 +90,6 @@ class Blockchain {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  // Utility Method to Tamper a Block for Test Validation
-  // This method is for testing purpose
-  _modifyBlock(height, block) {
-    let self = this;
-    return new Promise((resolve, reject) => {
-      self.bd
-        .addLevelDBData(height.toString(), JSON.stringify(block).toString())
-        .then(blockModified => {
-          resolve(blockModified);
-        })
-        .catch(err => {
-          console.log(err);
-          reject(err);
-        });
-    });
   }
 }
 

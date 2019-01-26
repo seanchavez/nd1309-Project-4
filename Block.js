@@ -4,11 +4,11 @@
 
 class Block {
   constructor(data) {
+    this.hash = '';
     this.height = -1;
-    this.timeStamp = '';
+    this.time = '';
     this.body = data;
     this.previousBlockHash = '';
-    this.hash = '';
   }
 }
 
