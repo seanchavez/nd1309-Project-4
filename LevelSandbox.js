@@ -61,9 +61,11 @@ class LevelSandbox {
     return new Promise((resolve, reject) => {
       const blocks = [];
       self.db
-        .createKeyStream()
+        .createValueStream()
         .on('data', function(data) {
-          if (data.body.address === address) {
+          console.log('DATA:', data);
+          let block = JSON.parse(data);
+          if (block.body.address === address) {
             blocks.push(data);
           }
         })
