@@ -18,8 +18,8 @@ app.post('/message-signature/validate', (req, res) => {
     const message = bc.mempool[address].response.message;
     console.log('HAAAY');
     if (bc.mempool[address]) {
-      console.log('WARMER')
-      const isValid = bitcoinMessage.verify(address, signature, message);
+      console.log('WARMER');
+      const isValid = bitcoinMessage.verify(message, address, signature);
       console.log('IsValid: ', isValid);
       if (isValid) {
         clearTimeout(bc.mempool[address].timeoutID);
