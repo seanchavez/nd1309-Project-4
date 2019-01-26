@@ -37,7 +37,7 @@ app.post('/message-signature/validate', (req, res) => {
           registerStar: true,
           status: {
             address,
-            validationTimestamp: timestamp,
+            validationTimeStamp: timestamp,
             message,
             submissionWindow: 1800,
             messageSignature: true,
