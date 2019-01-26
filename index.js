@@ -30,11 +30,19 @@ app.post('/message-signature/validate', (req, res) => {
             messageSignature: true,
           },
         };
-        res.status(200).json(response);
+        res.status(201).json(response);
+        bc.mempool[address] = { response };
+        bc.mempool[address].timeoutID = setTimeout(() => {
+          delete bc.mempool[address];
+          console.log('30 min Timeout!');
+        }, 1000 * 60 * 30);
       } else {
-        res.status(401).json(new Error('Valid signature is required'));
+        res.status(400).json(new Error('A valid signature is required'));
       }
     } else {
+      res
+        .status(400)
+        .json(new Error('You need to submit a validation request'));
     }
   } catch (error) {
     res.status(500).json(error);
@@ -62,7 +70,7 @@ app.post('/requestValidation', (req, res) => {
         validationWindow: 300,
       };
 
-      res.status(200).json(response);
+      res.status(201).json(response);
 
       bc.mempool[address] = { response };
       bc.mempool[address].timeoutID = setTimeout(() => {
