@@ -15,10 +15,19 @@ app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 app.post('/message-signature/validate', (req, res) => {
   try {
     const { address, signature } = req.body;
-    const message = bc.mempool[address].response.message;
-    console.log('HAAAY');
-    if (bc.mempool[address]) {
-      console.log('WARMER');
+    console.log('BEFORE');
+    if (bc.mempool[address].registerStar) {
+      console.log('AFTER');
+      bc.mempool[address].status.submissionWindow = Math.round(
+        (bc.mempool[address].status.validationTimeStamp -
+          (Date.now() - 30 * 60 * 1000)) /
+          1000,
+      );
+      res
+        .status(200)
+        .json({ registerStar: true, ...bc.mempool[address].status });
+    } else if (bc.mempool[address]) {
+      const message = bc.mempool[address].response.message;
       const isValid = bitcoinMessage.verify(message, address, signature);
       console.log('IsValid: ', isValid);
       if (isValid) {
@@ -36,11 +45,12 @@ app.post('/message-signature/validate', (req, res) => {
         };
         console.log('WTF: ', response);
         res.status(201).json(response);
-        bc.mempool[address] = { response };
+        bc.mempool[address] = { ...response };
         bc.mempool[address].timeoutID = setTimeout(() => {
           delete bc.mempool[address];
           console.log('30 min Timeout!');
         }, 1000 * 60 * 30);
+        console.log('WHATUP: ', bc.mempool[address]);
       } else {
         res.status(400).json({ error: 'A valid signature is required' });
       }
