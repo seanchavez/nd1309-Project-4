@@ -12,7 +12,6 @@ class Blockchain {
     if (!this.getBlock(0)) {
       this.addBlock(new Block('Genesis Block!'));
     }
-    
     this.mempool = {};
   }
 
