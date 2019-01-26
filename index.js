@@ -12,6 +12,8 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
+app.get('/stars/:address', (req, res) => {});
+
 app.post('/message-signature/validate', (req, res) => {
   try {
     const { address, signature } = req.body;
