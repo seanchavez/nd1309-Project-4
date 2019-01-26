@@ -2,6 +2,7 @@ const Blockchain = require('./BlockChain');
 const Block = require('./Block');
 const express = require('express');
 const bp = require('body-parser');
+const bitcoinMessage = require('bitcoinjs-message');
 const app = express();
 const port = 8000;
 
@@ -14,19 +15,27 @@ app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 app.post('/message-signature/validate', (req, res) => {
   try {
     const { address, signature } = req.body;
+    const message = bc.mempool[address].response.message;
     if (bc.mempool[address]) {
-      bc.mempool[address].response.validationWindow = Math.round(
-        (bc.mempool[address].response.requestTimeStamp -
-          (Date.now() - 5 * 60 * 1000)) /
-          1000,
-      );
-      if (bc.mempool.response.validationWindow > 0) {
-        
+      if (bitcoinMessage.verify(address, signature, message)) {
+        clearTimeout(bc.mempool[address].timeoutID);
+        const timestamp = Date.now();
+        const response = {
+          registerStar: true,
+          status: {
+            address,
+            validationTimestamp: timestamp,
+            message,
+            submissionWindow: 1800,
+            messageSignature: true,
+          },
+        };
+        res.status(200).json(response);
+      } else {
+        res.status(401).json(new Error('Valid signature is required'));
       }
     } else {
-
     }
-    
   } catch (error) {
     res.status(500).json(error);
   }
