@@ -16,8 +16,12 @@ app.post('/message-signature/validate', (req, res) => {
   try {
     const { address, signature } = req.body;
     const message = bc.mempool[address].response.message;
+    console.log('HAAAY');
     if (bc.mempool[address]) {
-      if (bitcoinMessage.verify(address, signature, message)) {
+      console.log('WARMER')
+      const isValid = bitcoinMessage.verify(address, signature, message);
+      console.log('IsValid: ', isValid);
+      if (isValid) {
         clearTimeout(bc.mempool[address].timeoutID);
         const timestamp = Date.now();
         const response = {
@@ -30,6 +34,7 @@ app.post('/message-signature/validate', (req, res) => {
             messageSignature: true,
           },
         };
+        console.log('WTF: ', response);
         res.status(201).json(response);
         bc.mempool[address] = { response };
         bc.mempool[address].timeoutID = setTimeout(() => {
@@ -37,15 +42,15 @@ app.post('/message-signature/validate', (req, res) => {
           console.log('30 min Timeout!');
         }, 1000 * 60 * 30);
       } else {
-        res.status(400).json(new Error('A valid signature is required'));
+        res.status(400).json({ error: 'A valid signature is required' });
       }
     } else {
       res
         .status(400)
-        .json(new Error('You need to submit a validation request'));
+        .json({ error: 'You need to submit a validation request' });
     }
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error: 'What in the actual fuck' });
   }
 });
 
@@ -81,7 +86,7 @@ app.post('/requestValidation', (req, res) => {
       console.log('ResponseWhat: ', bc.mempool[address]);
     }
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error });
   }
 });
 
