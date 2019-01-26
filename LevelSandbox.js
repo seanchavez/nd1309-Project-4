@@ -2,6 +2,7 @@
 |  Learn more: level: https://github.com/Level/level |
 /===================================================*/
 
+const hex2ascii = require('hex2ascii');
 const level = require('level');
 const chainDB = './chaindata';
 
@@ -66,7 +67,8 @@ class LevelSandbox {
           console.log('DATA:', data);
           let block = JSON.parse(data);
           if (block.body.address === address) {
-            blocks.push(data);
+            block.body.star.storyDecoded = hex2ascii(block.body.star.story);
+            blocks.push(block);
           }
         })
         .on('error', function(err) {
