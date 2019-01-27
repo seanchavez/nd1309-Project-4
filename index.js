@@ -12,7 +12,7 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
-app.get('/stars/:address', async (req, res) => {
+app.get('/stars/address::address', async (req, res) => {
   try {
     const stars = await bc.getBlocksWithSameAddress(req.params.address);
     if (stars) {
