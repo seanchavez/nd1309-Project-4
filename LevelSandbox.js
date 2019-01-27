@@ -57,6 +57,7 @@ class LevelSandbox {
         });
     });
   }
+
   getBlocksByAddress(address) {
     const self = this;
     return new Promise((resolve, reject) => {
@@ -76,6 +77,29 @@ class LevelSandbox {
         })
         .on('close', function() {
           resolve(blocks);
+        });
+    });
+  }
+
+  getBlockByHash(hash) {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      let target = null;
+      self.db
+        .createValueStream()
+        .on('data', function(data) {
+          console.log('DATA:', data);
+          let block = JSON.parse(data);
+          if (block.hash === hash) {
+            block.body.star.storyDecoded = hex2ascii(block.body.star.story);
+            target = block;
+          }
+        })
+        .on('error', function(err) {
+          reject(err);
+        })
+        .on('close', function() {
+          resolve(target);
         });
     });
   }

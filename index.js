@@ -12,13 +12,26 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
+app.get('/stars/hash::hash', async (req, res) => {
+  try {
+    const star = await bc.getBlockByHash(req.params.hash);
+    if (star) {
+      res.status(200).json(star);
+    } else {
+      res.status(404).json({ error: 'No star found with that hash' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
+
 app.get('/stars/address::address', async (req, res) => {
   try {
     const stars = await bc.getBlocksWithSameAddress(req.params.address);
     if (stars) {
       res.status(200).json(stars);
     } else {
-      res.status(404).json({ error: 'No stars found' });
+      res.status(404).json({ error: 'No stars found with that address' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Something went wrong' });
