@@ -19,7 +19,11 @@ class LevelSandbox {
         if (err) {
           reject(err);
         } else {
-          resolve(value);
+          const block = JSON.parse(value);
+          if (block.body.star) {
+            block.body.star.storyDecoded = hex2ascii(block.body.star.story);
+          }
+          resolve(block);
         }
       });
     });

@@ -67,7 +67,7 @@ class Blockchain {
   // Get Block By Height
   async getBlock(height) {
     try {
-      return JSON.parse(await this.bd.getLevelDBData(height.toString()));
+      return await this.bd.getLevelDBData(height.toString());
     } catch (error) {
       console.error(error);
     }
