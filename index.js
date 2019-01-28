@@ -41,9 +41,8 @@ app.get('/stars/address::address', async (req, res) => {
 app.post('/message-signature/validate', (req, res) => {
   try {
     const { address, signature } = req.body;
-    console.log('BEFORE');
+
     if (bc.mempool[address].registerStar) {
-      console.log('AFTER');
       bc.mempool[address].status.submissionWindow = Math.round(
         (bc.mempool[address].status.validationTimeStamp -
           (Date.now() - 30 * 60 * 1000)) /
