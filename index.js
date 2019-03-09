@@ -12,7 +12,7 @@ const bc = new Blockchain();
 
 app.get('/', (req, res) => res.status(200).json({ body: 'Sanity Check' }));
 
-app.get('/stars/hash ::hash', async (req, res) => {
+app.get('/stars/hash::hash', async (req, res) => {
   try {
     const star = await bc.getBlockByHash(req.params.hash);
     if (star) {
