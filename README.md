@@ -65,6 +65,9 @@ curl -d '{"body":"data"}' -H "Content-Type: application/json" -X POST http://loc
 
 ```
 {
-  "height":1,"timeStamp":"1547943772","body":"data","previousBlockHash":"3bdd2e4f11ab0532066942c1442fa122b5249d29bef04911d7f8f15d7a1a9241","hash":"dd77ad7528809f6f602e96132544e913cebf3447ead372d96be26606a4fe0e07"
+  "height": 1,
+  "timeStamp": "1547943772",
+  "body": "data",
+  "previousBlockHash": "3bdd2e4f11ab0532066942c1442fa122b5249d29bef04911d7f8f15d7a1a9241","hash":"dd77ad7528809f6f602e96132544e913cebf3447ead372d96be26606a4fe0e07"
 }
 ```
