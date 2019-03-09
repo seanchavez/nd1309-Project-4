@@ -23,7 +23,9 @@ node index.js
 Use Postman, curl, or similar tool to make HTTP requests. Use Electrum, or other
 Bitcoin wallet to obtain an address and sign a message.
 
-## URL: http://localhost:8000/block/[block_height]
+## Endpoints:
+
+### URL: http://localhost:8000/block/[block_height]
 
 A request to this endpoint returns the requested block object in the response.
 
