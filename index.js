@@ -54,7 +54,6 @@ app.post('/message-signature/validate', (req, res) => {
     } else if (bc.mempool[address]) {
       const message = bc.mempool[address].response.message;
       const isValid = bitcoinMessage.verify(message, address, signature);
-      console.log('IsValid: ', isValid);
       if (isValid) {
         clearTimeout(bc.mempool[address].timeoutID);
         const timestamp = Date.now();
@@ -68,14 +67,11 @@ app.post('/message-signature/validate', (req, res) => {
             messageSignature: true,
           },
         };
-        console.log('WTF: ', response);
         res.status(201).json(response);
         bc.mempool[address] = { ...response };
         bc.mempool[address].timeoutID = setTimeout(() => {
           delete bc.mempool[address];
-          console.log('30 min Timeout!');
         }, 1000 * 60 * 30);
-        console.log('WHATUP: ', bc.mempool[address]);
       } else {
         res.status(400).json({ error: 'A valid signature is required' });
       }
