@@ -18,20 +18,20 @@ Then run:
 node index.js
 ```
 
-### Usage:
+#### Usage:
 
 Use Postman, curl, or similar tool to make HTTP requests. Use Electrum, or other
 Bitcoin wallet to obtain an address and sign a message.
 
 ## Validation Routine:
 
-### URL: http://localhost:8000/requestValidation
+#### URL: http://localhost:8000/requestValidation
 
 A request to this endpoint adds a validation request to the mempool. The message returned
 must be validated within five minutes, or the validation request will be deleted from the
 mempool. The message returned will need to be signed using a Bitcoin wallet.
 
-#### example request:
+##### example request:
 
 ```
 curl -X POST \
@@ -43,7 +43,7 @@ curl -X POST \
   }'
 ```
 
-#### example response:
+##### example response:
 
 ```
 {
@@ -54,13 +54,13 @@ curl -X POST \
 }
 ```
 
-### URL: http://localhost:8000/message-signature/validate
+#### URL: http://localhost:8000/message-signature/validate
 
 A request to this endpoint validates a message signature and grants a user access
 to register a single star. The user must register a star within thirty minutes or
 the validated request will be deleted from the mempool.
 
-#### example request:
+##### example request:
 
 ```
 curl -X POST \
@@ -73,7 +73,7 @@ curl -X POST \
 }'
 ```
 
-#### example response:
+##### example response:
 
 ```
 {
@@ -132,18 +132,18 @@ curl -X POST \
 
 ## Star Lookup:
 
-### URL: http://localhost:8000/stars/hash:[HASH]
+#### URL: http://localhost:8000/stars/hash:[HASH]
 
 A request to this endpoint looks up a Star block by it's hash and returns it's contents
 along with the star story decoded to ASCII.
 
-#### example request:
+##### example request:
 
 ```
 curl http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f
 ```
 
-#### example response:
+##### example response:
 
 ```
 {
@@ -163,18 +163,18 @@ curl http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d095
 }
 ```
 
-### URL: http://localhost:8000/stars/address:[ADDRESS]
+#### URL: http://localhost:8000/stars/address:[ADDRESS]
 
 A request to this endpoint looks up any Star blocks associated with the given address, and
 returns their contents along with their star stories decoded to ASCII.
 
-#### example request:
+##### example request:
 
 ```
 curl localhost:8000/stars/address:1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW
 ```
 
-#### example response:
+##### example response:
 
 ```
 [
@@ -226,18 +226,18 @@ curl localhost:8000/stars/address:1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW
 ]
 ```
 
-### URL: http://localhost:8000/block/[HEIGHT]
+#### URL: http://localhost:8000/block/[HEIGHT]
 
 A request to this endpoint looks up a Star block by it's block height, and
 returns the contents.
 
-#### example request:
+##### example request:
 
 ```
 curl localhost:8000/block/20
 ```
 
-#### example response:
+##### example response:
 
 ```
 {
