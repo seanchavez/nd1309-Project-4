@@ -90,11 +90,11 @@ curl -X POST \
 
 ## Star Registration:
 
-### URL: http://localhost:8000/block
+#### URL: http://localhost:8000/block
 
 A request to this endpoint submits star information to be saved on the blockchain.
 
-#### example request:
+##### example request:
 
 ```
 curl -X POST \
@@ -111,7 +111,7 @@ curl -X POST \
 }'
 ```
 
-#### example response:
+##### example response:
 
 ```
 {
