@@ -99,7 +99,6 @@ app.post('/requestValidation', (req, res) => {
           (Date.now() - 5 * 60 * 1000)) /
           1000,
       );
-      console.log('IDK: ', bc.mempool[address]);
       res.status(200).json(bc.mempool[address].response);
     } else {
       const timestamp = Date.now();
@@ -117,8 +116,6 @@ app.post('/requestValidation', (req, res) => {
         delete bc.mempool[address];
         console.log('5 min Timeout!');
       }, 1000 * 60 * 5);
-
-      console.log('ResponseWhat: ', bc.mempool[address]);
     }
   } catch (error) {
     res.status(500).json({ error: 'Something went wrong' });

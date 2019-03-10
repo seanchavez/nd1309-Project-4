@@ -1,6 +1,6 @@
 # Project 4
 
-This project exposes a RESTful API that represents a Star Registry Registry Service which
+This project exposes a RESTful API that represents a Star Registry Service which
 allows a user to claim ownership of a star.
 
 ## Getting Started
@@ -23,7 +23,36 @@ node index.js
 Use Postman, curl, or similar tool to make HTTP requests. Use Electrum, or other
 Bitcoin wallet to obtain an address and sign a message.
 
-## Endpoints:
+## Validation Routine:
+
+### URL: http://localhost:8000/requestValidation
+
+A request to this endpoint adds a validation request to the mempool. The message returned
+must be validated within five minutes, or the validation request will be deleted from the
+mempool.
+
+#### example request:
+
+```
+curl -X POST \
+  http://localhost:8000/requestValidation \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+    "address":"1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW"
+  }'
+```
+
+#### example response:
+
+```
+{
+    "walletAddress": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+    "requestTimeStamp": 1552160056837,
+    "message": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW:1552160056837:starRegistry",
+    "validationWindow": 300
+}
+```
 
 ### URL: http://localhost:8000/block/[block_height]
 
