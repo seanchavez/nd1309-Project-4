@@ -54,6 +54,8 @@ curl -X POST \
 }
 ```
 
+---
+
 #### URL: http://localhost:8000/message-signature/validate
 
 A request to this endpoint validates a message signature and grants a user access
@@ -87,6 +89,8 @@ curl -X POST \
     }
 }
 ```
+
+---
 
 ## Star Registration:
 
@@ -130,6 +134,8 @@ curl -X POST \
 }
 ```
 
+---
+
 ## Star Lookup:
 
 #### URL: http://localhost:8000/stars/hash:[HASH]
@@ -162,6 +168,8 @@ curl http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d095
     "previousBlockHash": "e764400da779a428b0e5c439281c51cbbad4a85d186311498cada510b696f41e"
 }
 ```
+
+---
 
 #### URL: http://localhost:8000/stars/address:[ADDRESS]
 
@@ -225,6 +233,8 @@ curl localhost:8000/stars/address:1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW
     }
 ]
 ```
+
+---
 
 #### URL: http://localhost:8000/block/[HEIGHT]
 
