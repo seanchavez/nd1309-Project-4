@@ -68,8 +68,8 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{
-"address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
- "signature": "IEOTLDoCHsE5Iv6UgQfepC8ZqMkWyllAAx0W9L28k7cQQiAaKhOwPoe3RUAra0hjDr2M0SCc/PRvxKpk/gn7nvY="
+  "address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+  "signature": "IEOTLDoCHsE5Iv6UgQfepC8ZqMkWyllAAx0W9L28k7cQQiAaKhOwPoe3RUAra0hjDr2M0SCc/PRvxKpk/gn7nvY="
 }'
 ```
 
@@ -226,14 +226,15 @@ curl localhost:8000/stars/address:1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW
 ]
 ```
 
-### URL: http://localhost:8000/block/[block_height]
+### URL: http://localhost:8000/block/[HEIGHT]
 
-A request to this endpoint returns the requested block object in the response.
+A request to this endpoint looks up a Star block by it's block height, and
+returns the contents.
 
 #### example request:
 
 ```
-curl http://localhost:8000/block/0
+curl localhost:8000/block/20
 ```
 
 #### example response:
@@ -253,36 +254,5 @@ curl http://localhost:8000/block/0
         }
     },
     "previousBlockHash": "e764400da779a428b0e5c439281c51cbbad4a85d186311498cada510b696f41e"
-}
-```
-
-## POST
-
-URL: http://localhost:8000/block
-
-A request to this endpoint must include data for the block body in JSON format:
-
-```
-{
-  "body": "Data"
-}
-```
-
-The request will create a new block with the submitted data on the "body" property and returns the newly added block object in the response.
-
-#### example request:
-
-```
-curl -d '{"body":"data"}' -H "Content-Type: application/json" -X POST http://localhost:8000/block
-```
-
-#### example response:
-
-```
-{
-  "height": 1,
-  "timeStamp": "1547943772",
-  "body": "data",
-  "previousBlockHash": "3bdd2e4f11ab0532066942c1442fa122b5249d29bef04911d7f8f15d7a1a9241", "hash": "dd77ad7528809f6f602e96132544e913cebf3447ead372d96be26606a4fe0e07"
 }
 ```
