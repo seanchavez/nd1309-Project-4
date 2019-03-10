@@ -96,7 +96,7 @@ app.post('/message-signature/validate', (req, res) => {
 app.post('/block', async (req, res) => {
   try {
     const blockBody = req.body;
-    if (!bc.mempool[blockBody.address].registerStar) {
+    if (!bc.mempool[address] || !bc.mempool[blockBody.address].registerStar) {
       res.status(400).json({ error: 'You must first validate this request' });
     } else if (!blockBody.star) {
       res.status(400).json({ error: 'Add star data' });
