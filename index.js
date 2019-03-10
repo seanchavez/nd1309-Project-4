@@ -104,6 +104,8 @@ app.post('/block', async (req, res) => {
       blockBody.star.story = Buffer(blockBody.star.story).toString('hex');
       const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
       if (block) {
+        clearTimeout(bc.mempool[blockBody.address].timeoutID);
+        delete bc.mempool[blockBody.address];
         res.status(201).json(block);
       } else {
         res.status(400).json({ error: 'Block could not be added' });

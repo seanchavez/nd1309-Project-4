@@ -69,7 +69,6 @@ class LevelSandbox {
       self.db
         .createValueStream()
         .on('data', function(data) {
-          console.log('DATA:', data);
           let block = JSON.parse(data);
           if (block.body.address === address) {
             block.body.star.storyDecoded = hex2ascii(block.body.star.story);
@@ -92,7 +91,6 @@ class LevelSandbox {
       self.db
         .createValueStream()
         .on('data', function(data) {
-          console.log('DATA:', data);
           let block = JSON.parse(data);
           if (block.hash === hash) {
             block.body.star.storyDecoded = hex2ascii(block.body.star.story);
