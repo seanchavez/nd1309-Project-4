@@ -9,10 +9,14 @@ const Block = require('./Block.js');
 class Blockchain {
   constructor() {
     this.bd = new LevelSandbox();
-    if (!this.getBlock(0)) {
+    this.createGenesisBlock();
+    this.mempool = {};
+  }
+
+  async createGenesisBlock() {
+    if ((await this.getBlockHeight()) === -1) {
       this.addBlock(new Block('Genesis Block!'));
     }
-    this.mempool = {};
   }
 
   async getBlocksWithSameAddress(address) {
