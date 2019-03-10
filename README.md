@@ -56,13 +56,13 @@ curl -X POST \
 
 ---
 
-### URL: http://localhost:8000/message-signature/validate
+#### URL: http://localhost:8000/message-signature/validate
 
 A request to this endpoint validates a message signature and grants a user access
 to register a single star. The user must register a star within thirty minutes or
 the validated request will be deleted from the mempool.
 
-#### example request:
+##### example request:
 
 ```
 curl -X POST \
@@ -75,7 +75,7 @@ curl -X POST \
 }'
 ```
 
-#### example response:
+##### example response:
 
 ```
 {
