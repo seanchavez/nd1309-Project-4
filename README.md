@@ -29,7 +29,7 @@ Bitcoin wallet to obtain an address and sign a message.
 
 A request to this endpoint adds a validation request to the mempool. The message returned
 must be validated within five minutes, or the validation request will be deleted from the
-mempool.
+mempool. The message returned will need to be signed using a Bitcoin wallet.
 
 #### example request:
 
@@ -53,8 +53,6 @@ curl -X POST \
     "validationWindow": 300
 }
 ```
-
-The message returned will need to be signed using a Bitcoin wallet.
 
 ### URL: http://localhost:8000/message-signature/validate
 
@@ -142,7 +140,7 @@ along with the star story decoded to ASCII.
 #### example request:
 
 ```
-curl "http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f"
+curl http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f
 ```
 
 #### example response:
@@ -166,6 +164,67 @@ curl "http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d09
 ```
 
 ### URL: http://localhost:8000/stars/address:[ADDRESS]
+
+A request to this endpoint looks up any Star blocks associated with the given address, and
+returns their contents along with their star stories decoded to ASCII.
+
+#### example request:
+
+```
+curl localhost:8000/stars/address:1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW
+```
+
+#### example response:
+
+```
+[
+    {
+        "hash": "be9907f34397a6a275bb693b43ec42389423ba03ef3f8ac62f89803a535aade6",
+        "height": 18,
+        "time": 1548531540120,
+        "body": {
+            "address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+            "star": {
+                "dec": "68° 52' 56.9",
+                "ra": "16h 29m 1.0s",
+                "story": "466f756e642073746172207573696e672068747470733a2f2f7777772e676f6f676c652e636f6d2f736b792f",
+                "storyDecoded": "Found star using https://www.google.com/sky/"
+            }
+        },
+        "previousBlockHash": "d0fa800162e02376fcd752d9c65db43747e9d45a1c1e3687ec509169f5cdf0ca"
+    },
+    {
+        "hash": "e764400da779a428b0e5c439281c51cbbad4a85d186311498cada510b696f41e",
+        "height": 19,
+        "time": 1552157437144,
+        "body": {
+            "address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+            "star": {
+                "dec": "68° 52' 56.9",
+                "ra": "16h 29m 1.0s",
+                "story": "466f756e642073746172207573696e672068747470733a2f2f7777772e676f6f676c652e636f6d2f736b792f",
+                "storyDecoded": "Found star using https://www.google.com/sky/"
+            }
+        },
+        "previousBlockHash": "be9907f34397a6a275bb693b43ec42389423ba03ef3f8ac62f89803a535aade6"
+    },
+    {
+        "hash": "ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f",
+        "height": 20,
+        "time": 1552160286841,
+        "body": {
+            "address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+            "star": {
+                "dec": "68° 52' 56.9",
+                "ra": "16h 29m 1.0s",
+                "story": "466f756e642073746172207573696e672068747470733a2f2f7777772e676f6f676c652e636f6d2f736b792f",
+                "storyDecoded": "Found star using https://www.google.com/sky/"
+            }
+        },
+        "previousBlockHash": "e764400da779a428b0e5c439281c51cbbad4a85d186311498cada510b696f41e"
+    }
+]
+```
 
 ### URL: http://localhost:8000/block/[block_height]
 
