@@ -132,6 +132,41 @@ curl -X POST \
 }
 ```
 
+## Star Lookup:
+
+### URL: http://localhost:8000/stars/hash:[HASH]
+
+A request to this endpoint looks up a Star block by it's hash and returns it's contents
+along with the star story decoded to ASCII.
+
+#### example request:
+
+```
+curl "http://localhost:8000/stars/hash:ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f"
+```
+
+#### example response:
+
+```
+{
+    "hash": "ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f",
+    "height": 20,
+    "time": 1552160286841,
+    "body": {
+        "address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+        "star": {
+            "dec": "68° 52' 56.9",
+            "ra": "16h 29m 1.0s",
+            "story": "466f756e642073746172207573696e672068747470733a2f2f7777772e676f6f676c652e636f6d2f736b792f",
+            "storyDecoded": "Found star using https://www.google.com/sky/"
+        }
+    },
+    "previousBlockHash": "e764400da779a428b0e5c439281c51cbbad4a85d186311498cada510b696f41e"
+}
+```
+
+### URL: http://localhost:8000/stars/address:[ADDRESS]
+
 ### URL: http://localhost:8000/block/[block_height]
 
 A request to this endpoint returns the requested block object in the response.
@@ -146,7 +181,19 @@ curl http://localhost:8000/block/0
 
 ```
 {
-  "height":0,"timeStamp":"1547943533","body":"Genesis Block!","previousBlockHash":"","hash":"3bdd2e4f11ab0532066942c1442fa122b5249d29bef04911d7f8f15d7a1a9241"
+    "hash": "ea5b52eba8276db9eb147889050e851880e8a2d095c5e1055df089db0aded24f",
+    "height": 20,
+    "time": 1552160286841,
+    "body": {
+        "address": "1HMs1qQ3H9XcrSgRLJUM8bCGrbd3FHNmLW",
+        "star": {
+            "dec": "68° 52' 56.9",
+            "ra": "16h 29m 1.0s",
+            "story": "466f756e642073746172207573696e672068747470733a2f2f7777772e676f6f676c652e636f6d2f736b792f",
+            "storyDecoded": "Found star using https://www.google.com/sky/"
+        }
+    },
+    "previousBlockHash": "e764400da779a428b0e5c439281c51cbbad4a85d186311498cada510b696f41e"
 }
 ```
 
