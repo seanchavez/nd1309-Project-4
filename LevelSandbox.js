@@ -112,6 +112,7 @@ class LevelSandbox {
         .on('data', function(data) {
           let block = JSON.parse(data);
           if (
+            block.height > 0 &&
             block.body.star.dec === blockBody.star.dec &&
             block.body.star.ra === blockBody.star.ra
           ) {
