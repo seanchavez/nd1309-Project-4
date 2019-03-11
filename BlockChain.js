@@ -27,6 +27,14 @@ class Blockchain {
     }
   }
 
+  async isRegistered(blockBody) {
+    try {
+      return this.bd.searchForStar(blockBody);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async getBlockByHash(hash) {
     try {
       return this.bd.getBlockByHash(hash);

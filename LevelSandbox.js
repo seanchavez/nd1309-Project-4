@@ -105,6 +105,30 @@ class LevelSandbox {
         });
     });
   }
+
+  searchForStar(blockBody) {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      let found = false;
+      self.db
+        .createValueStream()
+        .on('data', function(data) {
+          let block = JSON.parse(data);
+          if (
+            block.body.star.dec === blockBody.star.dec &&
+            block.body.star.ra === blockBody.star.ra
+          ) {
+            found = true;
+          }
+        })
+        .on('error', function(err) {
+          reject(err);
+        })
+        .on('close', function() {
+          resolve(found);
+        });
+    });
+  }
 }
 
 module.exports = LevelSandbox;

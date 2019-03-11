@@ -103,6 +103,8 @@ app.post('/block', async (req, res) => {
       res.status(400).json({ error: 'You must first validate this request' });
     } else if (!blockBody.star) {
       res.status(400).json({ error: 'Add star data' });
+    } else if (bc.isRegistered(blockBody)) {
+      res.status(400).json({ error: 'This Star has already been registered' });
     } else {
       blockBody.star.story = Buffer.from(blockBody.star.story).toString('hex');
       const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
