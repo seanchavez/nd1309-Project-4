@@ -16,7 +16,18 @@ app.post('/requestValidation', (req, res) => {
   try {
     const address = req.body.address;
 
-    if (bc.mempool[address]) {
+    if (bc.mempool[address] && bc.mempool[address].registerStar) {
+      bc.mempool[address].status.submissionWindow = Math.round(
+        (bc.mempool[address].status.validationTimeStamp -
+          (Date.now() - 30 * 60 * 1000)) /
+          1000,
+      );
+      res.status(400).json({
+        error: `This address has already been validated. You have ${(
+          bc.mempool[address].status.submissionWindow / 60
+        ).toPrecision(2)} minutes left to submit a star`,
+      });
+    } else if (bc.mempool[address]) {
       bc.mempool[address].response.validationWindow = Math.round(
         (bc.mempool[address].response.requestTimeStamp -
           (Date.now() - 5 * 60 * 1000)) /
