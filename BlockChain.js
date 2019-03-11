@@ -53,7 +53,6 @@ class Blockchain {
     }
   }
 
-  // Add new block
   async addBlock(block) {
     try {
       const chainHeight = await this.getBlockHeight();
@@ -76,47 +75,9 @@ class Blockchain {
     }
   }
 
-  // Get Block By Height
   async getBlock(height) {
     try {
       return await this.bd.getLevelDBData(height.toString());
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  // Validate if Block is being tampered by Block Height
-  async validateBlock(height) {
-    try {
-      const block = await this.getBlock(height);
-      const blockHash = block.hash;
-      block.hash = '';
-      const validBlockHash = SHA256(JSON.stringify(block)).toString();
-      if (blockHash === validBlockHash) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  // Validate Blockchain
-  async validateChain() {
-    try {
-      const errorLog = [];
-      for (let i = 0; i < this.validateChain.length - 1; i++) {
-        if (!this.validateBlock(i)) {
-          errorLog.push(i);
-        }
-        const block = await this.getBlock(i);
-        const nextBlock = await this.getBlock(i + 1);
-        if (nextBlock && block.hash !== nextBlock.previousBlockHash) {
-          errorLog.push(i);
-        }
-      }
-      return errorLog;
     } catch (error) {
       console.error(error);
     }
