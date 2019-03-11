@@ -37,7 +37,7 @@ app.post('/requestValidation', (req, res) => {
       bc.mempool[address] = { response };
       bc.mempool[address].timeoutID = setTimeout(() => {
         delete bc.mempool[address];
-        console.log('5 min Timeout');
+        console.log('5 min Timeout!');
       }, 1000 * 60 * 5);
     }
   } catch (error) {
@@ -104,7 +104,7 @@ app.post('/block', async (req, res) => {
     } else if (!blockBody.star) {
       res.status(400).json({ error: 'Add star data' });
     } else {
-      blockBody.star.story = Buffer(blockBody.star.story).toString('hex');
+      blockBody.star.story = Buffer.from(blockBody.star.story).toString('hex');
       const block = JSON.parse(await bc.addBlock(new Block(blockBody)));
       if (block) {
         clearTimeout(bc.mempool[blockBody.address].timeoutID);
