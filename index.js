@@ -23,9 +23,10 @@ app.post('/requestValidation', (req, res) => {
           1000,
       );
       res.status(400).json({
-        error: `This address has already been validated. You have ${(
-          bc.mempool[address].status.submissionWindow / 60
-        ).toPrecision(2)} minutes left to submit a star`,
+        error: `This address has already been validated. You have ${Math.floor(
+          bc.mempool[address].status.submissionWindow / 60,
+        )} minutes, ${bc.mempool[address].status.submissionWindow %
+          60} seconds left to submit a star`,
       });
     } else if (bc.mempool[address]) {
       bc.mempool[address].response.validationWindow = Math.round(
